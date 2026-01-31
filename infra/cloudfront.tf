@@ -7,6 +7,30 @@ resource "aws_cloudfront_origin_access_control" "blog" {
   signing_protocol                  = "sigv4"
 }
 
+# CloudFront Function to handle directory index files
+resource "aws_cloudfront_function" "rewrite_uri" {
+  name    = "blog-rewrite-uri"
+  runtime = "cloudfront-js-2.0"
+  publish = true
+  code    = <<-EOF
+    function handler(event) {
+      var request = event.request;
+      var uri = request.uri;
+
+      // If URI ends with /, append index.html
+      if (uri.endsWith('/')) {
+        request.uri += 'index.html';
+      }
+      // If URI doesn't have a file extension, append /index.html
+      else if (!uri.includes('.')) {
+        request.uri += '/index.html';
+      }
+
+      return request;
+    }
+  EOF
+}
+
 # CloudFront distribution
 resource "aws_cloudfront_distribution" "blog" {
   enabled             = true
@@ -38,6 +62,11 @@ resource "aws_cloudfront_distribution" "blog" {
     min_ttl     = 0
     default_ttl = 3600
     max_ttl     = 86400
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.rewrite_uri.arn
+    }
   }
 
   # Cache behavior for static assets (longer TTL)
@@ -83,12 +112,10 @@ resource "aws_cloudfront_distribution" "blog" {
   }
 
   viewer_certificate {
-    acm_certificate_arn      = aws_acm_certificate_validation.blog.certificate_arn
+    acm_certificate_arn      = data.aws_acm_certificate.wildcard.arn
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2021"
   }
-
-  depends_on = [aws_acm_certificate_validation.blog]
 }
 
 # Route53 alias record

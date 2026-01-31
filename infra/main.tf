@@ -8,12 +8,13 @@ terraform {
     }
   }
 
-  # Uncomment to use remote state
-  # backend "s3" {
-  #   bucket = "your-terraform-state-bucket"
-  #   key    = "trevor-blog/terraform.tfstate"
-  #   region = "us-east-1"
-  # }
+  backend "s3" {
+    bucket         = "terrafacer"
+    key            = "trevor-blog.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "terraform"
+    encrypt        = true
+  }
 }
 
 provider "aws" {
