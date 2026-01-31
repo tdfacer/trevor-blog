@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/ui/PostCard.astro';
+import DotPattern from '../components/decorative/DotPattern.astro';
+import { getCollection } from 'astro:content';
+
+const blogPosts = await getCollection('blog', ({ data }) => !data.draft);
+const techArticles = await getCollection('tech', ({ data }) => !data.draft);
+
+const recentPosts = [...blogPosts, ...techArticles]
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 6);
+---
+
+<BaseLayout title="Home">
+  <!-- Hero Section -->
+  <section class="relative py-20 overflow-hidden">
+    <DotPattern class="opacity-20" />
+    <div class="relative max-w-5xl mx-auto px-4">
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+        <span class="text-terminal-green">$</span> whoami
+      </h1>
+      <p class="text-xl text-terminal-muted max-w-2xl font-mono">
+        Hi, I'm Trevor. I write about technology, programming, and the tools I use every day.
+      </p>
+      <div class="mt-8 flex gap-4">
+        <a
+          href="/blog"
+          class="px-6 py-3 bg-terminal-green text-terminal-bg font-mono font-semibold rounded hover:bg-terminal-green-dim transition-colors"
+        >
+          Read Blog
+        </a>
+        <a
+          href="/tech"
+          class="px-6 py-3 border border-terminal-green text-terminal-green font-mono font-semibold rounded hover:bg-terminal-green/10 transition-colors"
+        >
+          Tech Articles
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Posts -->
+  <section class="py-16 border-t border-terminal-border">
+    <div class="max-w-5xl mx-auto px-4">
+      <h2 class="text-2xl font-bold text-white mb-8 font-mono">
+        <span class="text-terminal-green">></span> Recent Posts
+      </h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {recentPosts.map((post) => {
+          const isBlog = post.collection === 'blog';
+          const href = isBlog ? `/blog/${post.id}` : `/tech/${post.id}`;
+          return (
+            <PostCard
+              title={post.data.title}
+              href={href}
+              date={post.data.date}
+              description={post.data.description}
+              tags={post.data.tags}
+            />
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

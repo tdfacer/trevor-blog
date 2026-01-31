@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostCard from '../../../components/ui/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('tech');
+  const categories = [...new Set(articles.map(a => a.data.category))];
+
+  return categories.map(category => ({
+    params: { category },
+    props: {
+      category,
+      articles: articles
+        .filter(a => a.data.category === category && !a.data.draft)
+        .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()),
+    },
+  }));
+}
+
+const { category, articles } = Astro.props;
+const categoryLabel = category.charAt(0).toUpperCase() + category.slice(1);
+---
+
+<BaseLayout title={categoryLabel} description={`Technical articles about ${categoryLabel}.`}>
+  <div class="max-w-5xl mx-auto px-4 py-12">
+    <header class="mb-12">
+      <nav class="text-sm font-mono text-terminal-muted mb-4">
+        <a href="/tech" class="hover:text-terminal-green">tech</a>
+        <span class="mx-2">/</span>
+        <span class="text-terminal-green">{category}</span>
+      </nav>
+      <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">
+        {categoryLabel}
+      </h1>
+      <p class="text-terminal-muted font-mono">
+        {articles.length} article{articles.length !== 1 ? 's' : ''}
+      </p>
+    </header>
+
+    {articles.length > 0 ? (
+      <div class="grid md:grid-cols-2 gap-6">
+        {articles.map((article) => (
+          <PostCard
+            title={article.data.title}
+            href={`/tech/${article.id}`}
+            date={article.data.date}
+            tags={article.data.tags}
+          />
+        ))}
+      </div>
+    ) : (
+      <p class="text-terminal-muted text-center py-12">No articles in this category yet.</p>
+    )}
+  </div>
+</BaseLayout>

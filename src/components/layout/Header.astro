@@ -1,0 +1,39 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/tech', label: 'Tech' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="border-b border-terminal-border bg-terminal-bg/95 backdrop-blur-sm sticky top-0 z-50">
+  <nav class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="/" class="font-mono text-xl font-semibold text-terminal-green hover:text-terminal-green-dim transition-colors">
+      ~/trevor
+    </a>
+
+    <ul class="flex items-center gap-6">
+      {navLinks.map(({ href, label }) => {
+        const isActive = currentPath === href ||
+          (href !== '/' && currentPath.startsWith(href));
+        return (
+          <li>
+            <a
+              href={href}
+              class:list={[
+                'font-mono text-sm transition-colors',
+                isActive
+                  ? 'text-terminal-green'
+                  : 'text-terminal-muted hover:text-terminal-text'
+              ]}
+            >
+              {isActive ? '>' : ''} {label}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
+</header>

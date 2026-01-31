@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply bg-terminal-bg text-terminal-text font-sans;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply min-h-screen antialiased;
+  }
+
+  ::selection {
+    @apply bg-terminal-green/30 text-white;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-terminal-bg;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-terminal-border rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-terminal-muted;
+  }
+}
+
+@layer components {
+  .terminal-glow {
+    @apply shadow-glow;
+  }
+
+  .terminal-glow-sm {
+    @apply shadow-glow-sm;
+  }
+
+  .link-hover {
+    @apply text-terminal-green hover:underline transition-colors;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-glow hover:border-terminal-green/50;
+  }
+}

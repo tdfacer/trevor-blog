@@ -1,0 +1,20 @@
+---
+interface Props {
+  variant?: 'default' | 'green';
+  class?: string;
+}
+
+const { variant = 'default', class: className = '' } = Astro.props;
+---
+
+<span
+  class:list={[
+    'inline-block px-2 py-0.5 text-xs font-mono rounded',
+    variant === 'green'
+      ? 'bg-terminal-green/20 text-terminal-green'
+      : 'bg-terminal-border text-terminal-muted',
+    className
+  ]}
+>
+  <slot />
+</span>

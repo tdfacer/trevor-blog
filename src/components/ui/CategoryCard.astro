@@ -1,0 +1,18 @@
+---
+import Card from './Card.astro';
+
+interface Props {
+  title: string;
+  href: string;
+  count: number;
+  icon?: string;
+}
+
+const { title, href, count, icon = '>' } = Astro.props;
+---
+
+<Card href={href} class="text-center">
+  <span class="text-2xl mb-2 block font-mono text-terminal-green">{icon}</span>
+  <h3 class="text-lg font-semibold text-terminal-text mb-1">{title}</h3>
+  <p class="text-sm text-terminal-muted font-mono">{count} article{count !== 1 ? 's' : ''}</p>
+</Card>

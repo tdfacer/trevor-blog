@@ -1,0 +1,43 @@
+---
+import Card from './Card.astro';
+import Badge from './Badge.astro';
+
+interface Props {
+  title: string;
+  href: string;
+  date: Date;
+  description?: string;
+  tags?: string[];
+}
+
+const { title, href, date, description, tags = [] } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+<Card href={href}>
+  <article>
+    <time datetime={date.toISOString()} class="text-xs font-mono text-terminal-muted">
+      {formattedDate}
+    </time>
+    <h3 class="text-lg font-semibold text-terminal-text mt-1 mb-2 group-hover:text-terminal-green">
+      {title}
+    </h3>
+    {description && (
+      <p class="text-sm text-terminal-muted line-clamp-2 mb-3">
+        {description}
+      </p>
+    )}
+    {tags.length > 0 && (
+      <div class="flex flex-wrap gap-2">
+        {tags.slice(0, 3).map(tag => (
+          <Badge>{tag}</Badge>
+        ))}
+      </div>
+    )}
+  </article>
+</Card>

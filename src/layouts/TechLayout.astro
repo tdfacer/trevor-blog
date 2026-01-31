@@ -1,0 +1,58 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Badge from '../components/ui/Badge.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  date: Date;
+  category: string;
+  tags?: string[];
+}
+
+const { title, description, date, category, tags = [] } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const categoryLabel = category.charAt(0).toUpperCase() + category.slice(1);
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="max-w-3xl mx-auto px-4 py-12">
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-2">
+        <a href={`/tech/${category}`} class="text-terminal-green hover:underline font-mono text-sm">
+          {categoryLabel}
+        </a>
+        <span class="text-terminal-border">/</span>
+        <time datetime={date.toISOString()} class="text-sm font-mono text-terminal-muted">
+          {formattedDate}
+        </time>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold text-white mt-2 mb-4">
+        {title}
+      </h1>
+      {tags.length > 0 && (
+        <div class="flex flex-wrap gap-2">
+          {tags.map(tag => (
+            <Badge variant="green">{tag}</Badge>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <div class="prose prose-invert prose-green max-w-none">
+      <slot />
+    </div>
+
+    <footer class="mt-12 pt-8 border-t border-terminal-border">
+      <a href="/tech" class="text-terminal-green hover:underline font-mono text-sm">
+        &larr; Back to tech articles
+      </a>
+    </footer>
+  </article>
+</BaseLayout>

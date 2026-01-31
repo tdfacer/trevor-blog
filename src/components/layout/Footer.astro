@@ -1,0 +1,30 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t border-terminal-border mt-auto">
+  <div class="max-w-5xl mx-auto px-4 py-8">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-terminal-muted text-sm font-mono">
+      <p>&copy; {currentYear} Trevor Facer</p>
+      <div class="flex items-center gap-4">
+        <a
+          href="https://github.com/tdfacer"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-terminal-green transition-colors"
+        >
+          GitHub
+        </a>
+        <span class="text-terminal-border">|</span>
+        <a
+          href="https://linkedin.com/in/trevorfacer"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-terminal-green transition-colors"
+        >
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
