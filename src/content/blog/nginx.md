@@ -1,5 +1,5 @@
 ---
-title: "Welcome to Jekyll!"
+title: "Welcome to Nginx!"
 date: "2022-05-21"
 tags: []
 ---

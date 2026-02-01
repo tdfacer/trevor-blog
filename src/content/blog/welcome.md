@@ -1,6 +1,6 @@
 ---
 title: "Welcome to My New Blog"
-date: 2026-01-31
+date: 2026-01-17
 description: "A brief introduction to my new blog built with Astro."
 tags: [meta, astro]
 ---
