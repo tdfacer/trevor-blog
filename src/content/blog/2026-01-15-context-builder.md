@@ -204,6 +204,10 @@ context_builder = {
 }
 ```
 
+## Check it out!
+
+See my repo [on GitHub](https://github.com/tdfacer/explain-it.nvim)
+
 ## What's Next
 
 The Context Builder is actively being developed. Planned features include:
