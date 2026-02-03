@@ -17,7 +17,7 @@ The core idea is to use the Claude Pro web interface for all my regular activiti
 To use the API, you need an authentication token. I use a simple shell alias to get a temporary token.
 
 ```bash
-alias claude-login="/path/to/claude/cli /login"
+alias claude-login="/path/to/claude/cli -p '/login'"
 ```
 
 When I need a token, I just run `claude-login` in my terminal. This gives me a session token that I can use to make API calls.
