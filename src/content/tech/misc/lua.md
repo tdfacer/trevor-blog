@@ -1,8 +1,8 @@
 ---
-title: "lua tech"
+title: "Lua"
 date: "2022-05-21"
-tags: []
+tags: ["lua", "scripting"]
 category: "misc"
 ---
 
-This is where I will discuss lua tech
+Lua is a lightweight, high-level, multi-paradigm programming language designed primarily for embedded use in applications. Here are my notes on it.

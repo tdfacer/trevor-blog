@@ -2,7 +2,7 @@
 title: "How I Stopped Context Switching From Ruining My Focus"
 date: 2026-01-31
 description: "Building fsm.nvim, a Focus Set Manager for Neovim that treats each work context as a first-class citizen"
-tags: [neovim, productivity, devops, tooling]
+tags: [neovim, productivity, devops, tooling, i3, tmux, fsm-nvim]
 draft: false
 ---
 
