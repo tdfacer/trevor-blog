@@ -8,13 +8,13 @@ draft: false
 
 # Giving AI Agents Live AWS Access: Hooking Up the AWS MCP Server
 
-The AWS MCP Server went GA in May 2026, and I added it to [trevor-agents](https://github.com/tdfacer/trevor-agents) the same week. The promise is straightforward: give every agent task a live window into your AWS account — not a static snapshot, not training data from 18 months ago, but real-time access to regions, services, documentation, and running resources.
+The AWS MCP Server went GA in May 2026, and I added it to my agent harness the same week. The promise is straightforward: give every agent task a live window into your AWS account — not a static snapshot, not training data from 18 months ago, but real-time access to regions, services, documentation, and running resources.
 
 This post covers the concrete setup (spoiler: four commands), the actual test results from the first verification run, and then what I think this actually unlocks when you let it run unsupervised.
 
 ## The Setup
 
-The `aws-mcp` plugin connects agents to the AWS managed MCP endpoint via a local proxy called `mcp-proxy-for-aws`. In the trevor-agents system, plugins are JSON descriptors that tell the harness how to launch an MCP server alongside each agent task.
+The `aws-mcp` plugin connects agents to the AWS managed MCP endpoint via a local proxy called `mcp-proxy-for-aws`. In my harness, plugins are JSON descriptors that tell it how to launch an MCP server alongside each agent task.
 
 The entire setup was four steps:
 
@@ -118,6 +118,6 @@ Stale architecture docs are a solved problem if the documentation agent can read
 
 Zero secrets. No IAM access keys, no environment variables, no rotation schedule. The EC2 instance running the agent has a role, the proxy picks it up, and the agent has AWS access. The security story is "your instance role is your agent's credential" — which is exactly how EC2 workloads are supposed to work, just extended into the agent's toolset.
 
-The four-command setup is fast enough that there's no real barrier to doing this on any project running on EC2. If you're already using trevor-agents (or building something similar), the `aws-mcp` plugin is worth enabling even if you don't have a specific use case yet. The documentation search tool alone is worth it for anything touching AWS APIs.
+The four-command setup is fast enough that there's no real barrier to doing this on any project running on EC2. If you're building something similar, the `aws-mcp` plugin is worth enabling even if you don't have a specific use case yet. The documentation search tool alone is worth it for anything touching AWS APIs.
 
 The real question now is which of the creative scenarios above to actually build. The incident investigation co-pilot is probably first.

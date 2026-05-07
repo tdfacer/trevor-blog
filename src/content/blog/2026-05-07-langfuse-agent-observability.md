@@ -10,7 +10,7 @@ draft: false
 
 Running autonomous coding agents is a lot like running distributed systems: things go wrong in ways that are hard to reason about after the fact. An agent burns through its budget in 10 turns instead of 100. Cache hit rates are mysteriously low. A tool keeps getting called in a loop before the circuit breaker fires. You want answers, but all you have is a log file and a vague sense of unease.
 
-I added [Langfuse](https://langfuse.com/) to [my agent harness](https://github.com/tdfacer/trevor-agents) today, and it's the single most useful debugging addition since I started the project. Here's what I did and what I can see now that I couldn't before.
+I added [Langfuse](https://langfuse.com/) to my agent harness today, and it's the single most useful debugging addition since I started the project. Here's what I did and what I can see now that I couldn't before.
 
 ## What Langfuse Is
 
